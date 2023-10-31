@@ -1,0 +1,14 @@
+<div *ngIf="message">
+    <div [ngClass]="{
+        'alert': true,
+        'alert-success': message.type === 'success',
+        'alert-danger': message.type === 'error',
+        'alert-warning': message.type === 'warning',
+        'alert-info': message.type === 'info',
+        'alert-license': message.type === 'license'
+    }">
+        <h4 *ngIf="displayHeading">{{ displayHeading }}</h4>
+        <p *ngIf="displayMessage">{{ displayMessage }}</p>
+        <a *ngIf="displayLink" [href]="displayLink" target="_blank">Read more</a>
+    </div>
+</div>

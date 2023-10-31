@@ -1,0 +1,58 @@
+/* Categories */
+.categories {
+    background-color: #FAF9F6;
+    color: #000000;
+    text-align: center;
+    padding: 10px 0;
+    z-index: 2;
+    position: relative;
+}
+
+/* Category Button */
+.categories .category-btn {
+    background: rgba(255, 255, 255, 0.3);
+    border: none;
+    border-radius: 5px;
+    padding: 5px 35px;
+    font-size: 16px;
+    color: #000000;
+    cursor: pointer;
+    position: relative;
+}
+
+/* Sub-categories */
+.sub-categories {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background: none;
+    padding: 5px;
+    z-index: 2;
+}
+
+.sub-categories button {
+    border: none;
+    background-color: #FAF9F6;
+}
+
+/* Show sub-categories on hover */
+.category-btn:hover .sub-categories {
+    display: block;
+}
+
+@media (max-width: 768px) {
+    .categories .category-btn {
+        padding: 5px 20px;
+        font-size: 14px;
+    }
+
+    .sub-categories {
+        top: 0;
+        left: 100%;
+    }
+
+    .sub-categories button {
+        padding: 5px 10px;
+    }
+}

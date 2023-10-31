@@ -1,0 +1,90 @@
+/* Footer */
+.footer {
+    background-color: #FAF9F6;
+    color: #000000;
+    padding: 20px 0;
+}
+
+.footer p {
+    margin: 0;
+}
+
+.logo img {
+    max-width: 60px;
+
+    border-radius: 50%;
+    padding: 5px;
+}
+
+.slogan {
+    font-size: 16px;
+    margin-top: 10px;
+}
+
+.follow-us p,
+.contact-us p {
+    font-size: 16px;
+    margin: 5px 0;
+}
+
+.follow-us a {
+    color: #000000;
+    text-decoration: none;
+    font-size: 20px;
+    margin-right: 20px;
+}
+
+.follow-us a:hover {
+    color: #5b697e;
+}
+
+.contact-info {
+    font-size: 16px;
+    margin: 5px 0;
+}
+
+.subscribe input {
+    border: none;
+    background: rgba(255, 255, 255, 0.8);
+    border-radius: 5px;
+    padding: 5px 10px;
+    width: 260px;
+    height: 35px;
+    font-size: 16px;
+    color: #000000;
+}
+
+.subscribe-button button {
+    border: none;
+    color: #fff;
+    padding: 5px 20px;
+    font-size: 16px;
+    height: 35px;
+    margin-left: 40px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.copyright {
+    text-align: center;
+    font-size: 14px;
+    margin: 20px 0;
+}
+
+@media (max-width: 768px) {
+    .slogan, .follow-us p, .contact-us p, .follow-us a, .contact-info, .subscribe, .subscribe-button, .copyright {
+        font-size: 14px;
+        margin: 10px 5px;
+    }
+
+    .subscribe input {
+        width: 100%;
+        margin-top: 10px;
+    }
+
+    .subscribe-button {
+        margin-top: 10px;
+        text-align: center;
+    }
+}
+
