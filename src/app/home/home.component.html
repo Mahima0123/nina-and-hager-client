@@ -1,5 +1,19 @@
-<app-header></app-header>
-<router-outlet></router-outlet>
-<app-category-details></app-category-details>
-<app-image-slider></app-image-slider>
-<app-footer></app-footer>
+<div class="main-container">
+    <app-header></app-header>
+    <router-outlet></router-outlet>
+    <app-category-details></app-category-details>
+    <app-image-slider></app-image-slider>
+    <app-feature-products></app-feature-products>
+    <app-features></app-features>
+    <app-footer></app-footer>
+    <app-feedback *ngIf="showFeedbackPopup"></app-feedback>
+</div>
+<button class="fixed-button" (click)="toggleFeedbackPopup()" [disabled]="!isLoggedIn">
+    <ng-container *ngIf="!showFeedbackPopup">
+        <i class="bi bi-boxes"></i> Feedback
+    </ng-container>
+    <ng-container *ngIf="showFeedbackPopup">
+        <i class="bi bi-backspace"></i>Close
+    </ng-container>
+</button>
+

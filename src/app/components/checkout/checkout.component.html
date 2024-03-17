@@ -1,0 +1,76 @@
+<app-header></app-header>
+<div class="container">
+    <div class="checkout-form">
+        <h2 class="text-left mt-5 mb-4">Place Your Order</h2>
+        <div class="checkout-container">
+            <div class="customer-details-container">
+                <div class="section-header">
+                    <h3>Customer Details</h3>
+                </div>
+                <div class="customer-details">
+                    <div class="form-group">
+                        <label for="fullName">Full Name</label>
+                        <input type="text" id="fullName" class="form-control" placeholder="Enter Full Name" [(ngModel)]="customerDetails.fullName" (input)="checkFormValidity()">
+                    </div>
+                    <div class="form-group">
+                        <label for="address">Address for delivery</label>
+                        <input type="text" id="address" class="form-control" placeholder="Enter Address" [(ngModel)]="customerDetails.address" (input)="checkFormValidity()">
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" class="form-control" placeholder="Enter Email" [(ngModel)]="customerDetails.email" (input)="checkFormValidity()">
+                    </div>
+                    <div class="form-group">
+                        <label for="phoneNumber">Phone Number</label>
+                        <input type="text" id="phoneNumber" class="form-control" placeholder="Enter Phone Number" [(ngModel)]="customerDetails.phoneNumber" (input)="checkFormValidity()">
+                    </div>
+                </div>
+            </div>
+            <div class="order-summary-container">
+                <div class="section-header">
+                    <h3>Order Summary</h3>
+                </div>
+                <div class="checkout-details">
+                    <table class="checkout-table">
+                        <thead>
+                            <tr>
+                                <th>Product Name</th>
+                                <th>Quantity</th>
+                                <th>Unit Price</th>
+                                <th>Total Price</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let item of cartItems">
+                                <td>{{ item.product_name }}</td>
+                                <td>{{ item.quantity }}</td>
+                                <td>Rs. {{ (item.unit_price | number:'1.2-2')}}</td>
+                                <td>Rs. {{ (item.unit_price * item.quantity | number:'1.2-2')}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="payment-methods">
+                    <h3>Payment Methods</h3>
+                    <label>
+                        <input type="radio" name="paymentMethod" value="cash" [(ngModel)]="selectedPaymentMethod"> Cash
+                    </label>
+                    <label>
+                        <input type="radio" name="paymentMethod" value="khalti" [(ngModel)]="selectedPaymentMethod"> Khalti
+                    </label>
+                    <label>
+                        <input type="radio" name="paymentMethod" value="Fonepay" [(ngModel)]="selectedPaymentMethod"> Fonepay
+                    </label>
+                </div>
+                <div class="subtotal">
+                    <h4>Subtotal</h4>
+                    <p class="total-price-value">Rs. {{ subTotal | number:'1.2-2' }}</p>
+                </div>
+            </div>
+        </div>
+        <div class="checkout-button">
+            <button class="btn btn-primary btn-lg" (click)="placeOrder()" [disabled]="!isFormValid">Place Order</button>
+        </div>
+    </div>
+</div>
+<app-footer></app-footer>

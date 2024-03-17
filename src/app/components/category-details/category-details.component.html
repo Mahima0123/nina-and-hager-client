@@ -1,78 +1,8 @@
 <div class="categories">
-    <button class="category-btn">
-        All
-    </button>
-    <button class="category-btn">
-        Category 2
-        <div class="sub-categories">
-            <button>Subcategory 4</button>
-            <button>Subcategory 5</button>
-            <button>Subcategory 6</button>
-        </div>
-    </button>
-    <button class="category-btn">
-        Category 2
-        <div class="sub-categories">
-            <button>Subcategory 4</button>
-            <button>Subcategory 5</button>
-            <button>Subcategory 6</button>
-        </div>
-    </button>
-    <button class="category-btn">
-        Category 2
-        <div class="sub-categories">
-            <button>Subcategory 4</button>
-            <button>Subcategory 5</button>
-            <button>Subcategory 6</button>
-        </div>
-    </button>
-    <button class="category-btn">
-        Category 2
-        <div class="sub-categories">
-            <button>Subcategory 4</button>
-            <button>Subcategory 5</button>
-            <button>Subcategory 6</button>
-        </div>
-    </button>
-    <button class="category-btn">
-        Category 2
-        <div class="sub-categories">
-            <button>Subcategory 4</button>
-            <button>Subcategory 5</button>
-            <button>Subcategory 6</button>
-        </div>
-    </button>
-    <button class="category-btn">
-        Category 2
-        <div class="sub-categories">
-            <button>Subcategory 4</button>
-            <button>Subcategory 5</button>
-            <button>Subcategory 6</button>
-        </div>
-    </button>
-    <button class="category-btn">
-        Category 2
-        <div class="sub-categories">
-            <button>Subcategory 4</button>
-            <button>Subcategory 5</button>
-            <button>Subcategory 6</button>
-        </div>
-    </button>
-    <button class="category-btn">
-        Category 2
-        <div class="sub-categories">
-            <button>Subcategory 4</button>
-            <button>Subcategory 5</button>
-            <button>Subcategory 6</button>
-        </div>
-    </button>
-    <button class="category-btn">
-        Category 2
-        <div class="sub-categories">
-            <button>Subcategory 4</button>
-            <button>Subcategory 5</button>
-            <button>Subcategory 6</button>
-        </div>
-    </button>
+    <ul>
+        <li class="category-btn" *ngFor="let category of categories" (click)="selectCategory(category)">
+            <img [src]="category.image" alt="{{ category.name }}">
+            {{ category.name }}
+        </li>
+    </ul>
 </div>
-

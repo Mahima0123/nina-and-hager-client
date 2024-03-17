@@ -1,1 +1,28 @@
-<p>favorites works!</p>
+<app-header></app-header>
+<div class="container">
+    <div class="form">
+        <div class="shopping-header">
+            <h2 class="text-left mt-5 mb-4">Favorites</h2>
+        </div>
+        <div *ngIf="favoriteItems.length > 0; else emptyFavorite" class="cart-items">
+            <div class="cart-item" *ngFor="let item of favoriteItems">
+                <img [src]="item.imageUrl" alt="Product Image" class="product-image" />
+                <div class="product-details">
+                    <h5 class="product-name">{{ item.product_name }}</h5>
+                    <p class="unit-price">Unit Price: Rs. {{ (item.unit_price | number:'1.2-2')}}</p>
+                </div>
+                <button class="btn btn-outline-danger remove-button" (click)="toggleFavorite(item)">
+                    <i class="bi bi-heart{{ isFavorite(item) ? '-fill' : '' }}"></i>
+                </button>
+            </div>
+        </div>
+        
+        <div class="back-to-shopping">
+            <button (click)="continueShopping()"><i class="bi bi-arrow-left"></i>Continue Shopping</button>
+        </div>
+        <ng-template #emptyFavorite>
+            <p class="text-center mt-5">Your Favorites is empty.</p>
+        </ng-template>
+    </div>
+</div>
+<app-footer></app-footer>

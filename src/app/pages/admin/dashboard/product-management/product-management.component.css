@@ -1,0 +1,163 @@
+.header-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #336799;
+    color: #fff;
+    padding: 10px 20px;
+}
+
+.logo img {
+    max-width: 60px;
+    border-radius: 50%;
+    padding: 5px;
+}
+
+.tab-container {
+    display: flex;
+    align-items: center;
+    margin-left: 20px;
+}
+
+.tab {
+    padding: 8px 15px;
+    cursor: pointer;
+    border: none;
+    transition: background-color 0.3s ease-in-out;
+}
+
+.tab:hover {
+    color: #cdac73;
+}
+
+.tab-container::before,
+.header-container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    background-color: #d0cdcd;
+    z-index: -1;
+}
+
+.date-section {
+    align-items: center;
+    margin-top: 10px;
+    margin-left: auto;
+    padding-left: 10px;
+}
+
+.actions {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.actions button {
+    margin-left: 10px;
+    background-color: #cdac73;
+    color: #fff;
+    border: none;
+    border-radius: 50px;
+    padding: 8px 16px;
+    cursor: pointer;
+}
+
+.actions button:hover {
+    opacity: 0.9;
+    cursor: pointer;
+}
+
+.dasboardtitle {
+    margin: 0;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #ddd;
+}
+
+.view-products-btn button {
+    background-color: #cdac73;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease-in-out;
+}
+
+.view-products-btn button:hover {
+    background-color: #cda45e;
+}
+
+.view-products-btn button i {
+    margin-right: 5px;
+}
+
+/* Add product section */
+.product-container {
+    width: 900px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.form-group {
+    display: flex;
+    align-items: center;
+}
+
+.form-group label {
+    flex: 0 0 150px;
+    margin-right: 20px;
+    font-size: 16px;
+    font-weight: 600;
+
+}
+
+.form-group input,
+.form-group textarea {
+    
+    width: 600px;
+    padding: 8px;
+    box-sizing: border-box;
+    margin-bottom: 10px;
+    border: none;
+    border-bottom: 1px solid #cdac73;
+    background-color: transparent;
+    transition: border-bottom 0.3s ease-in-out;
+}
+
+input:focus,
+textarea:focus {
+    outline: none;
+    border-bottom: 2px solid #cdac73;
+}
+
+.preview-image {
+    max-width: 100px;
+    max-height: 100px;
+    margin-top: 10px;
+}
+
+.add-product-btn {
+    background-color: #cdac73;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    margin-left: 360px;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease-in-out;
+}
+
+.add-product-btn:hover {
+    background-color: #cda45e;
+}
+
+.add-product-btn i {
+    margin-right: 5px;
+}

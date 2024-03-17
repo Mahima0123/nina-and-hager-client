@@ -1,31 +1,58 @@
 .alert {
-    padding: 20px;
-    margin: 20px;
-    border: 1px solid transparent;
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 15px;
     border-radius: 4px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    transition: opacity 0.5s ease-in-out;
+    z-index: 1000;
+    opacity: 1;
+    width: 300px;
+}
+
+.alert-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+    background-color: inherit;
+    /* Inherit the background color from the specific alert type */
+    border-bottom: 1px solid #ddd;
+}
+
+.alert-title {
+    margin: 0;
+    color: inherit;
+    /* Optional: Set text color to white */
+}
+
+.alert-content {
+    padding: 0;
+    border-radius: 0 0 4px 4px;
 }
 
 .alert-success {
-    background-color: #4CAF50;
-    color: white;
+    background-color: #d4edda;
+    border-color: #c3e6cb;
+    color: #155724;
 }
 
 .alert-danger {
-    background-color: #f44336;
-    color: white;
+    background-color: #f8d7da;
+    border-color: #f5c6cb;
+    color: #721c24;
 }
 
 .alert-warning {
-    background-color: #ff9800;
-    color: white;
+    background-color: #fff3cd;
+    border-color: #ffeeba;
+    color: #856404;
 }
 
 .alert-info {
-    background-color: #2196F3;
-    color: white;
-}
-
-.alert-license {
-    background-color: #337ab7;
-    color: white;
+    background-color: #d1ecf1;
+    border-color: #bee5eb;
+    color: #0c5460;
 }

@@ -1,11 +1,11 @@
 <div class="image-slider">
     <div class="slide">
-        <!-- This is the image slider -->
+        <!-- This is the image slider part -->
         <img [src]="slides[currentSlideIndex].imageSrc" [alt]="'image-slider ' + (currentSlideIndex + 1)" />
         <div class="image-content">
             <h1>{{ slides[currentSlideIndex].title }}</h1>
             <p>{{ slides[currentSlideIndex].description }}</p>
-            <button class="btn btn-primary">Shop Now</button>
+            <button class="btn btn-primary" [routerLink]="['/allProducts']">Shop Now</button>
         </div>
     </div>
 </div>

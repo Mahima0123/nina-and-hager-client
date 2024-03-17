@@ -5,16 +5,24 @@
                 <a [routerLink]="['/']"><img src="../../../../../assets/images/logo.png" alt="logo" /></a>
             </div>
             <div class="search-bar">
-                <input type="text" placeholder="search..." /><i class="bi bi-search"></i>
+                <input type="text" placeholder="search..." [(ngModel)]="searchQuery" (keyup)="searchProducts()" /><i class="bi bi-search" (click)="searchProducts()"></i>
             </div>
             <div class="location">
                 <i class="bi bi-geo-alt"></i>
                 <span>Gairidhara, Kathmandu.</span>
             </div>
             <div class="actions">
-                <button><i class="bi bi-heart"></i></button>
-                <button><i class="bi bi-cart-plus"></i></button>
-                <button [routerLink]="['/login']" ><i class="bi bi-person-circle"></i></button>
+                <button (click)="checkUserForFavorite()"><img src="../../../assets/images/heart.png"></button>
+                <button (click)="checkUserForCart()"><img src="../../../assets/images/cart.png"></button>
+                <button (click)="checkUserForProfile()"><img src="../../../assets/images/profile.png"></button>
+                <div class="mainButton" *ngIf="isLoggedIn">
+                    <!-- Show logout button when logged in -->
+                    <button (click)="logout()"><i class="bi bi-box-arrow-right"></i>Logout</button>
+                </div>
+                <div class="mainButton" *ngIf="!isLoggedIn">
+                    <!-- Show login button when not logged in -->
+                    <button (click)="navigateToLogin()"><i class="bi bi-person-circle"></i> Login</button>
+                </div>
             </div>
         </div>
     </div>

@@ -82,3 +82,19 @@ a {
     cursor: pointer;
     text-decoration: none;
 }
+
+.form-group .btn {
+    background-color: #27408B;
+    border: 1px solid #27408B;
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s, border-color 0.3s, color 0.3s;
+}
+
+.form-group .btn:hover {
+    background-color: #1e3266;
+    border-color: #1e3266;
+}
+

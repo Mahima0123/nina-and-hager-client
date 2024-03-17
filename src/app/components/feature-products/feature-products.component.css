@@ -1,0 +1,130 @@
+.container {
+    max-width: 1250px;
+    position: relative;
+}
+
+.underline-hover {
+    position: relative;
+    display: inline-block;
+    color: #404040;
+}
+
+.underline-hover:before,
+.underline-hover:after {
+    content: "";
+    position: absolute;
+    height: 3px;
+    background-color: #000060;
+    top: 50%;
+    width: 400px;
+}
+
+.underline-hover:before {
+    right: 100%;
+    margin-right: 10px;
+}
+
+.underline-hover:after {
+    left: 100%;
+    margin-left: 10px;
+}
+
+
+.card {
+    transition: transform 0.2s;
+}
+
+.card:hover {
+    transform: scale(1.05);
+}
+
+.card-img-top {
+    height: 250px;
+    object-fit: contain;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+}
+
+.card-body {
+    text-align: center;
+    height: 100%;
+}
+
+.card-title {
+    font-size: 1rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.card-text {
+    font-size: 0.9rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.btn-primary {
+    background-color: #fff;
+    color: #28a745;
+    border: 1px solid #28a745;
+}
+
+.btn-outline-danger {
+    background-color: #fff;
+    color: #dc3545;
+    border: 1px solid #dc3545;
+}
+
+.btn-primary:hover {
+    background-color: #28a745;
+    color: #fff;
+}
+
+.btn-outline-danger:hover {
+    background-color: #dc3545;
+    color: #fff;
+}
+
+.btn-primary,
+.btn-outline-danger {
+    width: 100%;
+    margin-top: 10px;
+    
+}
+
+h2.text-center {
+    margin-bottom: 30px;
+}
+
+.btn-view-all-products {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #fff;
+    color: #31649e;
+    border: 1px solid #31649e;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.btn-view-all-products:hover {
+    background-color: #31649e;
+    color: #fff;
+}
+
+.btn-view-all-products:focus {
+    outline: none;
+}
+
+.btn-view-all-products:active {
+    background-color: #27408B;
+    border-color: #27408B;
+}
+
+@media (max-width: 991.98px) {
+    .card {
+        margin-bottom: 20px;
+    }
+}

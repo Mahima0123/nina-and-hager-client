@@ -1,0 +1,36 @@
+<app-header></app-header>
+<div class="container">
+    <div class="form">
+        <div class="form-image">
+            <img src="../../../assets/images/user-profile.svg" alt="User Profile" />
+        </div>
+        <div class="form-fields">
+            <h2>My Information</h2>
+            <form #userProfileForm="ngForm" (ngSubmit)="saveChanges()">
+                <div *ngIf="user">
+                    <div class="form-group">
+                        <i class="bi bi-person-fill icon"></i>
+                        <input type="text" class="user-info" name="name" [(ngModel)]="user.name" required [disabled]="!editing">
+                    </div>
+                    <div class="form-group">
+                        <i class="bi bi-telephone-fill icon"></i>
+                        <input type="tel" class="user-info" name="phoneNumber" [(ngModel)]="user.phoneNumber" required [disabled]="!editing">
+                    </div>
+                    <div class="form-group">
+                        <i class="bi bi-envelope-fill icon"></i>
+                        <input type="email" class="user-info" name="email" [(ngModel)]="user.email" required [disabled]="!editing">
+                    </div>
+                    <div class="form-group">
+                        <i class="bi bi-person-fill icon"></i>
+                        <input type="text" class="user-info" name="username" [(ngModel)]="user.username" required [disabled]="!editing">
+                    </div>
+                    <div class="form-group">
+                        <button type="button" class="btn btn-primary mr-2 btn-cancel" (click)="toggleEditMode()">{{ editing ? 'Cancel' : 'Edit' }}</button>
+                        <button type="submit" class="btn btn-primary" [hidden]="!editing">Save</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<app-footer></app-footer>

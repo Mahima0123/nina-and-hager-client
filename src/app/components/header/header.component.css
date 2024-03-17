@@ -1,10 +1,13 @@
 .header {
-    background-color: #FAF9F6;
     color: #000000;
     text-align: center;
     padding: 5px 0;
     z-index: 3;
     position: relative;
+    width: 100%;
+    background: #FAF9F6;
+    color: #000;
+    opacity: 0.85;
 }
 
 .overlay {
@@ -13,27 +16,25 @@
 
 .logo img {
     max-width: 60px;
-
     border-radius: 50%;
     padding: 5px;
 }
 
 .navbar {
     display: flex;
-    align-items: center;
     justify-content: space-between;
-    padding: 10px 20px;
+    height: 64px;
+    align-items: center;
 }
 
 .search-bar {
     display: flex;
     align-items: center;
     justify-content: center;
-    background: rgba(255, 255, 255, 0.8);
-    border: none;
-    border-radius: 5px;
-    padding: 5px;
-    width: 500px;
+    position: relative;
+    padding: 8px;
+    width: 300px;
+    transition: width 0.3s ease;
 }
 
 .search-bar input {
@@ -41,7 +42,6 @@
     outline: none;
     background: none;
     flex: 1;
-    padding: 5px;
     font-size: 16px;
     color: #000000;
 }
@@ -50,11 +50,28 @@
     color: #000000;
 }
 
-.search-bar i {
-    font-size: 20px;
+.search-bar button {
+    font-size: 16px;
     color: #000000;
     cursor: pointer;
     margin-right: 5px;
+    position: absolute;
+    right: 8px;
+}
+
+.search-bar::before {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    width: calc(100% - 16px);
+    height: 1px;
+    background-color: #000000;
+    transform: translateX(-50%);
+}
+
+.search-bar:focus-within {
+    width: 500px;
 }
 
 .location,
@@ -72,18 +89,75 @@
 
 .location span {
     border-bottom: 1px solid #000000;
-    padding-bottom: 5px;
+    padding-bottom: 10px;
     white-space: nowrap;
 }
 
 .actions button {
-    background: none;
+    background-color: transparent;
     border: none;
-    color: #000000;
-    font-size: 20px;
-    margin-left: 20px;
+    padding: 8px 16px;
     cursor: pointer;
+    margin-left: 15px;
+    font-size: 1.3rem;
+    color: #444;
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.3s ease-in-out;
 }
+
+.actions button img {
+    max-width: 30px;
+    transition: transform 0.3s ease;
+}
+
+.actions img:hover {
+    color: #0056b3;
+}
+
+.actions .mainButton button {
+    background-color: #27408B;
+    color: #fff;
+    border: none;
+    z-index: 1;
+    position: relative;
+    border-radius: 5px;
+}
+
+.actions .mainButton button:after {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 0;
+    bottom: 0;
+    left: 0;
+    z-index: -1;
+    border-radius: 5px;
+    background-color: #31649e;
+    background-image: linear-gradient(315deg, #95b1d0 0%, #6790c1 74%);
+    box-shadow:
+    -7px -7px 20px 0px #fff9,
+    -4px -4px 5px 0px #fff9,
+    7px 7px 20px 0px #0002,
+    4px 4px 5px 0px #0001;
+    transition: all 0.3s ease;
+    border-radius: 5px;
+}
+
+.actions .mainButton button:hover {
+    color: #fff;
+}
+
+.actions .mainButton button:hover:after {
+    top: 0;
+    height: 100%;
+}
+
+.actions .mainButton button:active {
+    top: 2px;
+}
+
+
 
 @media (max-width: 768px) {
     .navbar {
@@ -93,15 +167,12 @@
     }
 
     .search-bar {
-        width: 100%;
-        margin-top: 10px;
+        width: 300px;
     }
 
-    .search-bar input {
-        width: 100%;
-    }
-
-    .location, .actions {
+    .location,
+    .actions {
         margin-top: 10px;
+        align-self: flex-start;
     }
 }

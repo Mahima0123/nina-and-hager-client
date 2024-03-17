@@ -1,1 +1,28 @@
-<p>product-details works!</p>
+<app-header></app-header>
+<div class="container" *ngIf="product">
+    <div class="form">
+        <div class="form-image">
+            <img [src]="product.imageUrl" alt="Product Image">
+        </div>
+        <div class="form-fields">
+            <div class="form-group">
+                <span class="product-name">{{ product.product_name }}</span>
+            </div>
+            <div class="form-group">
+                <span style="font-size: 18px;">{{ product.product_desc }}</span>
+            </div>
+            <div class="form-group">
+                <span style="font-size: 17px;">Rs. {{ product.unit_price }}</span>
+            </div>
+            <div class="form-group">
+                <button class="btn btn-primary" (click)="addToCart(product)">
+                    <i class="bi bi-cart"></i> Add to Cart
+                </button>
+                <button class="btn btn-outline-danger" (click)="addToFavorites(product)">
+                    <i class="bi bi-heart"></i> Add to Favorites
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<app-footer></app-footer>

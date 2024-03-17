@@ -1,0 +1,87 @@
+<!-- This is the tab -->
+<div class="header-container">
+  <div class="logo">
+    <a [routerLink]="['/']"><img src="../../../../../assets/images/logo.png" alt="logo" /></a>
+  </div>
+  <div class="tab-container">
+    <div class="tab" [class.active]="currentTab === 'dashboard'" (click)="showTab('dashboard')" [routerLink]="['/dashboard']">Dashboard</div>
+      <div class="tab" [class.active]="currentTab === 'products'" (click)="showTab('products')" [routerLink]="['/product']">Product Management</div>
+      <div class="tab" [class.active]="currentTab === 'users'" (click)="showTab('users')" [routerLink]="['/user']">User Management</div>
+  </div>
+  <div class="date-section">
+      <p>Date: {{ currentDate | date: 'dd/MM/yyyy' }}</p>
+  </div>
+
+  <div class="actions">
+    <div *ngIf="isLoggedIn">
+        <!-- Show logout button when logged in -->
+        <button (click)="logout()"><i class="bi bi-box-arrow-right"></i>Logout</button>
+    </div>
+    <div *ngIf="!isLoggedIn">
+        <!-- Show login button when not logged in -->
+        <button (click)="navigateToLogin()"><i class="bi bi-person-circle"></i> Login</button>
+    </div>
+</div>
+</div>
+
+<div class="row" style="height: 90vh; overflow: scroll; background-color: #f4f4f4; padding: 20px;">
+  <div class="row dasboardtitle" style="margin: 0 12px;padding-top: 10px; margin-bottom: 10px;">
+    <div class="col-lg-12" style="width: 100%;">
+      <div class="dashboardTitle d-flex" style="justify-content:space-between;display: flex; align-items: center;">
+        <div class="title">
+          <h5>Dashboard</h5>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<!-- This is the rectangular box -->
+  <div class="dashboard-wrapper">
+    <div class="top-rectangles">
+      <div class="row">
+        <div class="col-lg-6">
+          <div class="row">
+            <!-- Rectangular Boxes -->
+            <div class="col-lg-4" *ngFor="let box of rectangularBoxes">
+              <div class="col-lg-12 pad-0">
+                <div class="rectangle-item">
+                  <div class="rectangle" [ngClass]="box.color">
+                    <p>{{ box.label }}</p>
+                    <p>{{ box.value }}</p>
+                    <div class="icon">
+                      <img [src]="box.icon" alt="{{ box.label }}">
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      
+        <div class="col-lg-3" style="margin-left: 150px; ">
+          <!-- Pie Chart -->
+          <div class="chart-title">
+            <h6>Debit & Credit</h6>
+          </div>
+          <canvas #pieCanvas></canvas>
+        </div>
+      </div>
+      <!-- Bar Graph -->
+      <div class="row">
+        <div class="col-lg-6">
+          <div class="chart-title">
+            <h6>Income & Expense Graph</h6>
+          </div>
+          <canvas #barCanvas></canvas>
+        </div>
+
+        <div class="col-lg-6">
+          <div class="chart-title">
+            <h6>Monthly Product Sales</h6>
+          </div>
+          <canvas #lineCanvas></canvas>
+        </div>
+      </div>
+  </div>
+</div>
+<app-footer></app-footer>

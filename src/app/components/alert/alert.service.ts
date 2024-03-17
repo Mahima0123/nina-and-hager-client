@@ -1,88 +1,44 @@
-import { Injectable } from "@angular/core";
-import { NavigationStart, Router } from "@angular/router";
-import { Observable, Subject } from "rxjs";
+import { Injectable } from '@angular/core';
+import { Observable, Subject } from 'rxjs';
 
-@Injectable()
+@Injectable({
+    providedIn: 'root',
+})
 export class AlertService {
-    private subject = new Subject<any>();
-    private showHideSubject = new Subject<boolean>();
-    private keepAfterNavigationChange = false;
-    public autoDisplay: boolean = true;
+    private alertSubject = new Subject<any>();
 
-    public emitShowHideSubject = new Subject<boolean>();
+    constructor() { }
 
-    constructor(private router: Router) {
-        // clear alert message on route change
-        router.events.subscribe(event => {
-            if (event instanceof NavigationStart) {
-                if (this.keepAfterNavigationChange) {
-                    // only keep for a single location change
-                    this.keepAfterNavigationChange = false;
-                } else {
-                    // clear alert
-                    this.subject.next();
-                }
-            }
-        });
+    private showAlert(type: string, message: string) {
+        this.alertSubject.next({ type, text: message });
+
+        // Delay clearing the message after 3000 milliseconds (adjust the time as needed)
+        setTimeout(() => {
+            this.clearMessage();
+        }, 3000);
     }
 
-    success(message: string, autoDisplay = true) {
-        return new Promise<void>((resolve, reject) => {
-            this.autoDisplay = autoDisplay;
-            this.subject.next({ type: "success", text: message });
-            resolve();
-        });
+    success(message: string) {
+        this.showAlert('success', message);
     }
 
-    error(message: string, autoDisplay = false) {
-        return new Promise<void>((resolve, reject) =>{
-            this.autoDisplay = autoDisplay;
-            this.subject.next({type: "error", text: message});
-            this.show();
-            resolve();
-        });
+    error(message: string) {
+        this.showAlert('error', message);
     }
 
-    warning(message: string, autoDisplay = false) {
-        return new Promise<void>((resolve, reject) => {
-            this.autoDisplay = autoDisplay;
-            this.subject.next({type:"warning", text: message});
-            this.show();
-            resolve();
-        })
+    warning(message: string) {
+        this.showAlert('warning', message);
     }
 
-    info(message: string, autoDisplay = false) {
-        return new Promise<void>((resolve, reject) => {
-            this.autoDisplay = autoDisplay;
-            this.subject.next({type:"info", text: message});
-            this.show();
-            resolve();
-        });
+    info(message: string) {
+        this.showAlert('info', message);
+    }
+
+    clearMessage() {
+        this.alertSubject.next();
     }
 
     getMessage(): Observable<any> {
-        return this.subject.asObservable();
-    }
-
-    getShowHide(): Observable<boolean> {
-        return this.showHideSubject.asObservable();
-    }
-
-    show() {
-        this.showHideSubject.next(true);
-    }
-
-    hide() {
-        this.showHideSubject.next(false);
-    }
-
-    license(message: string, link: string = '', autoDisplay = false) {
-        return new Promise<void>((resolve, reject) => {
-            this.autoDisplay = autoDisplay;
-            this.subject.next({type:"liscense", text: message, link: link});
-            this.show();
-            resolve();
-        })
+        return this.alertSubject.asObservable();
     }
 }

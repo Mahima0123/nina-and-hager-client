@@ -1,0 +1,23 @@
+<div class="feedback-popup">
+    <div class="feedback-header">
+        <h3 class="feedback-title">Share your feedback</h3>
+    </div>
+    <div class="feedback-content">
+        <form>
+            <div class="form-group">
+                <label for="satisfaction">How satisfied are you with our services?</label>
+                <div id="satisfaction" class="satisfaction-icons">
+                    <span class="satisfaction-icon"><i class="bi bi-emoji-grin"></i></span>
+                    <span class="satisfaction-icon"><i class="bi bi-emoji-heart-eyes"></i></span>
+                    <span class="satisfaction-icon"><i class="bi bi-emoji-smile"></i></span>
+                    <span class="satisfaction-icon"><i class="bi bi-emoji-expressionless"></i></span>
+                    <span class="satisfaction-icon"><i class="bi bi-emoji-frown"></i></span>
+                </div>
+            </div>
+            <div class="form-group">
+                <textarea id="message" name="message" class="form-control" placeholder="Describe your feedback here" [(ngModel)]="feedbackText"></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary" (click)="submitFeedback()">Submit</button>
+        </form>
+    </div>
+</div>
