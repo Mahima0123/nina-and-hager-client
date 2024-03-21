@@ -37,18 +37,28 @@ export class FeatureProductsComponent implements OnInit {
 
   addToCart(product: any) {
     if (!this.isLoggedIn) {
-      this.alertService.error("Please login first.")
+        this.alertService.error("Please login first.")
     } else {
-      const cartItems = this.shoppingCartService.getCartItems();
-      const cartItem = cartItems.find((item: any) => item.product_id === product.id);
-      if (cartItem && cartItem.quantity >= product.quantity) {
-        this.alertService.error("Maximum quantity reached for this product.");
-      } else {
+        const currentUser = this.authService.getCurrentUser();
+        if (!currentUser) {
+            this.alertService.error("Failed to retrieve current user information.");
+            return;
+        }
+
+        // Check maximum quantity reached for this product in the cart
+        const cartItems = this.shoppingCartService.getCartItems();
+        const cartItem = cartItems.find((item: any) => item.product_id === product.id);
+        if (cartItem && cartItem.quantity >= product.quantity) {
+            this.alertService.error("Maximum quantity reached for this product.");
+            return;
+        }
+
+        // Add to cart
         this.shoppingCartService.addToCart(product);
         this.alertService.success("Product added to cart.");
-        const currentUser = this.authService.getCurrentUser();
-        if (currentUser) {
-          const cartItemToSend = {
+
+        // Save cart item
+        const cartItemToSend = {
             user_id: currentUser.id,
             product_id: product.id,
             product_name: product.product_name,
@@ -56,22 +66,19 @@ export class FeatureProductsComponent implements OnInit {
             unit_price: product.unit_price,
             total_price: product.unit_price,
             sub_total: product.unit_price
-          };
-          this.shoppingCartService.saveCartItem(cartItemToSend).subscribe(
+        };
+        this.shoppingCartService.saveCartItem(cartItemToSend).subscribe(
             (response: any) => {
-              console.log('Cart item saved successfully');
-              this.alertService.success("Product added to cart.");
+                console.log('Cart item saved successfully');
+                this.alertService.success("Product added to cart.");
             },
             (error: any) => {
-              this.alertService.error("Failed to add product to cart. Please try again.");
+                this.alertService.error("Failed to add product to cart. Please try again.");
             }
-          );
-        } else {
-          this.alertService.error("Failed to retrieve current user information.");
-        }
-      }
+        );
     }
-  }
+}
+
 
   addToFavorites(product: any) {
     if (!this.isLoggedIn) {

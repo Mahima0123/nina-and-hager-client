@@ -5,6 +5,7 @@ import { ProductService } from 'src/app/services/product.service'; // Import Pro
 import { Product } from 'src/app/model/product';
 import { AlertService } from '../alert/alert.service';
 import { AuthService } from 'src/app/services/auth.service';
+import { quantity } from 'chartist';
 
 @Component({
   selector: 'app-shopping-cart',
@@ -60,34 +61,36 @@ export class ShoppingCartComponent implements OnInit {
 
   async increaseQuantity(item: any) {
     try {
-        const productDetails: Product | undefined = await this.productService.getProductById(item.id).toPromise();
-        console.log('Product Details:', productDetails);
-        if (productDetails && productDetails.quantity !== undefined) {
-            if (productDetails.quantity > item.quantity) {
-                item.quantity++;
-                this.shoppingCartService.updateLocalStorage(this.cartItems);
-                this.subTotal += item.unit_price; // Increase subtotal after increasing quantity
-                this.cdr.detectChanges();
-            } else {
-                this.alertService.warning('Sorry, the available quantity for this product is insufficient.');
-            }
+      const productDetails: Product | undefined = await this.productService.getProductById(item.id).toPromise();
+      console.log('Product Details:', productDetails);
+      if (productDetails && productDetails.quantity !== undefined) {
+        if (productDetails.quantity > item.quantity) {
+          console.log(quantity)
+          item.quantity++;
+          this.shoppingCartService.updateCartItemQuantity(item.id, item.quantity); // Update quantity in local storage
+          this.updateSubTotal(); // Update subtotal after increasing quantity
+          this.cdr.detectChanges();
         } else {
-            this.alertService.error('Product details not found or unavailable.');
+          this.alertService.warning('Sorry, the available quantity for this product is insufficient.');
         }
+      } else {
+        this.alertService.error('Product details not found or unavailable.');
+      }
     } catch (error) {
-        this.alertService.error('An error occurred while fetching product details. Please try again later.');
+      this.alertService.error('An error occurred while fetching product details. Please try again later.');
     }
-}
-
-
+  }
+  
   decreaseQuantity(item: any) {
     if (item.quantity > 1) {
       item.quantity--;
-      this.shoppingCartService.updateLocalStorage(this.cartItems);
-      this.subTotal -= item.unit_price; // Decrease subtotal after decreasing quantity
+      this.shoppingCartService.updateCartItemQuantity(item.id, item.quantity); // Update quantity in local storage
+      this.updateSubTotal(); // Update subtotal after decreasing quantity
       this.cdr.detectChanges();
     }
   }
+  
+  
 
   private extractUrlFromUrlTree(urlTree: UrlTree): string {
     // Extract the string representation of the URL from the UrlTree object

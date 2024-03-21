@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, map } from 'rxjs';
+import { BehaviorSubject, Observable, map, of } from 'rxjs';
 import { ProductService } from './product.service';
 import { Product } from '../model/product'; // Import Product model
 import { HttpClient } from '@angular/common/http';
@@ -24,6 +24,7 @@ export class ShoppingCartService {
             this.cartItemsSubject.next(cartItems);
         }
     }
+
 
     addToCart(product: Product): void {
         const existingItemIndex = this.cartItemsSubject.value.findIndex(item => item.id === product.id);
@@ -104,17 +105,22 @@ export class ShoppingCartService {
     //     return this.cartItemsSubject.value.find(item => item.id === productId);
     // }
 
-    updateCartItemQuantity(productId: number, newQuantity: number): void {
-        const updatedCartItems = this.cartItemsSubject.value.map(item => {
-            if (item.id === productId) {
-                return { ...item, quantity: newQuantity };
-            }
-            return item;
-        });
-        this.cartItemsSubject.next(updatedCartItems);
-        this.updateLocalStorage(updatedCartItems);
-    }
-
+    updateCartItemQuantity(itemId: number, newQuantity: number): void {
+        // Retrieve cart items from local storage
+        const cartItems: any[] = JSON.parse(localStorage.getItem('cartItems') || '[]');
+    
+        // Find the item with the specified itemId
+        const itemToUpdate = cartItems.find(item => item.id === itemId);
+    
+        // Update the quantity of the item
+        if (itemToUpdate) {
+          itemToUpdate.quantity = newQuantity;
+        }
+    
+        // Update the cart items in local storage
+        localStorage.setItem('cartItems', JSON.stringify(cartItems));
+      }
+    
     //for saving the products into cart table
     saveCartItem(cartItem: any) {
         return this.http.post('http://localhost:3000/cart', cartItem);
