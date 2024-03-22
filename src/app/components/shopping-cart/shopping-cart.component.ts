@@ -1,11 +1,10 @@
-import { ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { Router, UrlTree } from '@angular/router';
 import { ShoppingCartService } from 'src/app/services/shoppingCart.service';
-import { ProductService } from 'src/app/services/product.service'; // Import ProductService
-import { Product } from 'src/app/model/product';
+import { ProductService } from 'src/app/services/product.service';
 import { AlertService } from '../alert/alert.service';
 import { AuthService } from 'src/app/services/auth.service';
-import { quantity } from 'chartist';
+import { Product } from 'src/app/model/product';
 
 @Component({
   selector: 'app-shopping-cart',
@@ -19,7 +18,7 @@ export class ShoppingCartComponent implements OnInit {
 
   constructor(
     private shoppingCartService: ShoppingCartService,
-    private productService: ProductService, // Inject ProductService
+    private productService: ProductService,
     private router: Router,
     private cdr: ChangeDetectorRef,
     public alertService: AlertService,
@@ -27,8 +26,7 @@ export class ShoppingCartComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.loadCartItems();
-    this.updateSubTotal();
+    this.loadCartItemsFromLocalStorage();
     
     // Retrieve previous route from navigation history
     const navigationHistory = this.router.getCurrentNavigation()?.previousNavigation;
@@ -39,6 +37,14 @@ export class ShoppingCartComponent implements OnInit {
 
   updateSubTotal(): void {
     this.subTotal = this.cartItems.reduce((total, item) => total + (item.unit_price * item.quantity), 0);
+  }
+
+  loadCartItemsFromLocalStorage(): void {
+    const storedCartItems = localStorage.getItem('cartItems');
+    if (storedCartItems) {
+      this.cartItems = JSON.parse(storedCartItems);
+      this.updateSubTotal(); // Update subtotal after loading cart items
+    }
   }
 
   loadCartItems(): void {
@@ -56,20 +62,17 @@ export class ShoppingCartComponent implements OnInit {
   removeFromCart(item: any) {
     this.shoppingCartService.removeFromCart(item);
     this.loadCartItems();
-    this.updateSubTotal();
   }
 
   async increaseQuantity(item: any) {
     try {
       const productDetails: Product | undefined = await this.productService.getProductById(item.id).toPromise();
-      console.log('Product Details:', productDetails);
       if (productDetails && productDetails.quantity !== undefined) {
         if (productDetails.quantity > item.quantity) {
-          console.log(quantity)
           item.quantity++;
           this.shoppingCartService.updateCartItemQuantity(item.id, item.quantity); // Update quantity in local storage
           this.updateSubTotal(); // Update subtotal after increasing quantity
-          this.cdr.detectChanges();
+          this.updateCartInLocalStorage(); // Update cart items in local storage
         } else {
           this.alertService.warning('Sorry, the available quantity for this product is insufficient.');
         }
@@ -86,10 +89,13 @@ export class ShoppingCartComponent implements OnInit {
       item.quantity--;
       this.shoppingCartService.updateCartItemQuantity(item.id, item.quantity); // Update quantity in local storage
       this.updateSubTotal(); // Update subtotal after decreasing quantity
-      this.cdr.detectChanges();
+      this.updateCartInLocalStorage(); // Update cart items in local storage
     }
   }
   
+  updateCartInLocalStorage(): void {
+    localStorage.setItem('cartItems', JSON.stringify(this.cartItems));
+  }
   
 
   private extractUrlFromUrlTree(urlTree: UrlTree): string {

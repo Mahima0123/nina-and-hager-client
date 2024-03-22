@@ -62,11 +62,6 @@ export class ShoppingCartService {
         return this.http.delete(`http://localhost:3000/cart/${itemId}`);
     }
 
-    //updating cart storage
-    updateLocalStorage(cartItems: any[]): void {
-        localStorage.setItem('cartItems', JSON.stringify(cartItems));
-    }
-
     getCartItems(): any[] {
         const storedCartItems = localStorage.getItem('cartItems');
         if (storedCartItems) {
@@ -99,27 +94,22 @@ export class ShoppingCartService {
         const userId = this.authService.getCurrentUser()?.id;
         return this.http.get<any[]>(`http://localhost:3000/cart/${userId}`);
     }
-    
-
-    // getCartItemById(productId: number): any {
-    //     return this.cartItemsSubject.value.find(item => item.id === productId);
-    // }
 
     updateCartItemQuantity(itemId: number, newQuantity: number): void {
-        // Retrieve cart items from local storage
-        const cartItems: any[] = JSON.parse(localStorage.getItem('cartItems') || '[]');
-    
-        // Find the item with the specified itemId
-        const itemToUpdate = cartItems.find(item => item.id === itemId);
-    
-        // Update the quantity of the item
-        if (itemToUpdate) {
-          itemToUpdate.quantity = newQuantity;
+        const cartItems = this.cartItemsSubject.value;
+        const updatedCartItems = cartItems.map(item => {
+            if (item.id === itemId) {
+            return { ...item, quantity: newQuantity };
         }
-    
-        // Update the cart items in local storage
+            return item;
+        });
+        this.cartItemsSubject.next(updatedCartItems);
+        this.updateLocalStorage(updatedCartItems);
+    }
+
+    private updateLocalStorage(cartItems: any[]): void {
         localStorage.setItem('cartItems', JSON.stringify(cartItems));
-      }
+    }
     
     //for saving the products into cart table
     saveCartItem(cartItem: any) {

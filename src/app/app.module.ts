@@ -29,6 +29,7 @@ import { ViewProductComponent } from './pages/admin/dashboard/view-product/view-
 import { ProductsComponent } from './pages/products/products.component';
 import { CheckoutComponent } from './components/checkout/checkout.component';
 import { FeedbackComponent } from './components/feedback/feedback.component';
+import { UserResponseComponent } from './components/user-response/user-response.component';
 
 
 
@@ -57,7 +58,8 @@ import { FeedbackComponent } from './components/feedback/feedback.component';
     ViewProductComponent,
     ProductsComponent,
     CheckoutComponent,
-    FeedbackComponent
+    FeedbackComponent,
+    UserResponseComponent
   ],
   imports: [
     BrowserModule,

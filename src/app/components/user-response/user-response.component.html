@@ -1,0 +1,17 @@
+<div class="container">
+    <h2 class="title-line">Happy Customer Stories</h2>
+    <div class="response-container">
+        <div class="arrow left-arrow" (click)="slideLeft()">
+            <span class="bi bi-chevron-left"></span>
+        </div>
+        <div class="response-box" *ngFor="let feedback of displayedFeedbacks">
+            <div class="content">
+                <div class="description">{{ feedback.feedback_text }}</div>
+                <div class="user-name">{{ feedback.user_name }}</div>
+            </div>
+        </div>
+        <div class="arrow right-arrow" (click)="slideRight()">
+            <span class="bi bi-chevron-right"></span>
+        </div>
+    </div>
+</div>

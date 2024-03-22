@@ -28,6 +28,7 @@ export class FeatureProductsComponent implements OnInit {
     this.productService.getRandomFeaturedProducts(8).subscribe(
       (data) => {
         this.featuredProducts = data;
+        console.log('Featured Products:', this.featuredProducts);
       },
       (error) => {
         console.error('Error fetching featured products:', error);
@@ -37,7 +38,7 @@ export class FeatureProductsComponent implements OnInit {
 
   addToCart(product: any) {
     if (!this.isLoggedIn) {
-        this.alertService.error("Please login first.")
+        this.alertService.error("Please login first.");
     } else {
         const currentUser = this.authService.getCurrentUser();
         if (!currentUser) {
@@ -50,34 +51,51 @@ export class FeatureProductsComponent implements OnInit {
         const cartItem = cartItems.find((item: any) => item.product_id === product.id);
         if (cartItem && cartItem.quantity >= product.quantity) {
             this.alertService.error("Maximum quantity reached for this product.");
-            return;
+            return; // Exit function if maximum quantity is reached
         }
 
-        // Add to cart
-        this.shoppingCartService.addToCart(product);
-        this.alertService.success("Product added to cart.");
-
-        // Save cart item
-        const cartItemToSend = {
-            user_id: currentUser.id,
-            product_id: product.id,
-            product_name: product.product_name,
-            quantity: 1,
-            unit_price: product.unit_price,
-            total_price: product.unit_price,
-            sub_total: product.unit_price
-        };
-        this.shoppingCartService.saveCartItem(cartItemToSend).subscribe(
-            (response: any) => {
-                console.log('Cart item saved successfully');
+        // Check available quantity in the database
+        this.productService.getProductById(product.id).subscribe(
+          (productDetails: any) => {
+            if (productDetails && productDetails.quantity !== undefined) {
+              if (productDetails.quantity > 0) {
+                // Add to cart
+                this.shoppingCartService.addToCart(product);
                 this.alertService.success("Product added to cart.");
-            },
-            (error: any) => {
-                this.alertService.error("Failed to add product to cart. Please try again.");
+
+                // Save cart item
+                const cartItemToSend = {
+                    user_id: currentUser.id,
+                    product_id: product.id,
+                    product_name: product.product_name,
+                    quantity: 1,
+                    unit_price: product.unit_price,
+                    total_price: product.unit_price,
+                    sub_total: product.unit_price
+                };
+                this.shoppingCartService.saveCartItem(cartItemToSend).subscribe(
+                    (response: any) => {
+                        console.log('Cart item saved successfully');
+                        this.alertService.success("Product added to cart.");
+                    },
+                    (error: any) => {
+                        this.alertService.error("Failed to add product to cart. Please try again.");
+                    }
+                );
+              } else {
+                this.alertService.error("This product is out of stock.");
+              }
+            } else {
+              this.alertService.error('Product details not found or unavailable.');
             }
+          },
+          (error) => {
+            console.error('Error fetching product details:', error);
+            this.alertService.error('An error occurred while fetching product details. Please try again later.');
+          }
         );
     }
-}
+  }
 
 
   addToFavorites(product: any) {

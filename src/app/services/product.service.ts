@@ -45,4 +45,8 @@ export class ProductService {
     getProductById(productId: number): Observable<Product> {
         return this.http.get<Product>(`${this.apiUrl}/${productId}`);
     }
+
+    getAvailableQuantity(productId: number): Observable<number> {
+        return this.http.get<number>(`http://localhost:3000/products/${productId}/available-quantity`);
+      }
 }
