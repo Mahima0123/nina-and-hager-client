@@ -61,5 +61,6 @@ export class HeaderComponent implements OnInit {
 
     searchProducts() {
         this.searchQueryChange.emit(this.searchQuery); // Emit the search query to the parent component
+        this.router.navigate(['/allProducts'])
     }
 }

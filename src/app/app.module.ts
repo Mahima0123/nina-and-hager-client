@@ -30,6 +30,7 @@ import { ProductsComponent } from './pages/products/products.component';
 import { CheckoutComponent } from './components/checkout/checkout.component';
 import { FeedbackComponent } from './components/feedback/feedback.component';
 import { UserResponseComponent } from './components/user-response/user-response.component';
+import { OffersComponent } from './components/offers/offers.component';
 
 
 
@@ -59,7 +60,8 @@ import { UserResponseComponent } from './components/user-response/user-response.
     ProductsComponent,
     CheckoutComponent,
     FeedbackComponent,
-    UserResponseComponent
+    UserResponseComponent,
+    OffersComponent
   ],
   imports: [
     BrowserModule,
