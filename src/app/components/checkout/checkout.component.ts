@@ -96,7 +96,7 @@ export class CheckoutComponent {
       email: this.customerDetails.email,
       phoneNumber: this.customerDetails.phoneNumber,
       paymentMethod: this.selectedPaymentMethod,
-      cartId: this.cartItems[0].id, // Assuming cart_id is retrieved from cartItems
+      cartId: this.cartItems[0].id,
       products: products,
     };
   

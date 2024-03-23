@@ -39,8 +39,9 @@
 }
 
 .feature-box {
+    background-color: #c8d5ea;
     width: 23%;
-    border: 1px solid #ccc;
+    border: none;
     border-radius: 8px;
     padding: 10px;
     text-align: center;

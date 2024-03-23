@@ -31,6 +31,7 @@ import { CheckoutComponent } from './components/checkout/checkout.component';
 import { FeedbackComponent } from './components/feedback/feedback.component';
 import { UserResponseComponent } from './components/user-response/user-response.component';
 import { OffersComponent } from './components/offers/offers.component';
+import { RecommendedProductsComponent } from './components/recommended-products/recommended-products.component';
 
 
 
@@ -61,7 +62,8 @@ import { OffersComponent } from './components/offers/offers.component';
     CheckoutComponent,
     FeedbackComponent,
     UserResponseComponent,
-    OffersComponent
+    OffersComponent,
+    RecommendedProductsComponent
   ],
   imports: [
     BrowserModule,
