@@ -12,6 +12,7 @@ import { ProductsComponent } from './pages/products/products.component';
 import { ShoppingCartComponent } from './components/shopping-cart/shopping-cart.component';
 import { FavoritesComponent } from './components/favorites/favorites.component';
 import { CheckoutComponent } from './components/checkout/checkout.component';
+import { OrderConfirmationComponent } from './pages/order-confirmation/order-confirmation.component';
 
 
 const routes: Routes = [
@@ -26,7 +27,8 @@ const routes: Routes = [
   { path: 'view-product', component: ViewProductComponent },
   { path: 'product-details/:id', component: ProductDetailsComponent },
   { path: 'allProducts', component: ProductsComponent },
-  { path: 'checkout', component: CheckoutComponent }
+  { path: 'checkout', component: CheckoutComponent },
+  { path: 'order-confirmation/:id', component: OrderConfirmationComponent }
 ];
 
 @NgModule({

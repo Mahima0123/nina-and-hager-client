@@ -32,6 +32,7 @@ import { FeedbackComponent } from './components/feedback/feedback.component';
 import { UserResponseComponent } from './components/user-response/user-response.component';
 import { OffersComponent } from './components/offers/offers.component';
 import { RecommendedProductsComponent } from './components/recommended-products/recommended-products.component';
+import { OrderConfirmationComponent } from './pages/order-confirmation/order-confirmation.component';
 
 
 
@@ -63,7 +64,8 @@ import { RecommendedProductsComponent } from './components/recommended-products/
     FeedbackComponent,
     UserResponseComponent,
     OffersComponent,
-    RecommendedProductsComponent
+    RecommendedProductsComponent,
+    OrderConfirmationComponent
   ],
   imports: [
     BrowserModule,

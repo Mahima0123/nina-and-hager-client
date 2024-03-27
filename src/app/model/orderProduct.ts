@@ -1,4 +1,3 @@
-// Define a simplified interface for the products array in the Order interface
 export interface OrderProduct {
     product_id: number;
     product_name: string;

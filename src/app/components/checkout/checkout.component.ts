@@ -75,42 +75,63 @@ export class CheckoutComponent {
   }
 
   placeOrder() {
-    // Map cart items to order products
+    // Map cart items to order products and associate them with the generated order ID
     const products: OrderProduct[] = this.cartItems.map(item => ({
-      product_id: item.product_id,
-      product_name: item.product_name,
-      quantity: item.quantity,
-      unit_price: item.unit_price,
-      total_price: item.unit_price * item.quantity,
-      sub_total: this.subTotal
+        product_id: item.product_id,
+        product_name: item.product_name,
+        quantity: item.quantity,
+        unit_price: item.unit_price,
+        total_price: item.unit_price * item.quantity,
+        sub_total: this.subTotal
     }));
-  
+
     // Get the current user ID or use 0 if not available
     const userId = this.authService.getCurrentUser()?.id || 0;
-  
+
     // Create the order object
     const order: Order = {
-      userId: userId,
-      fullName: this.customerDetails.fullName,
-      address: this.customerDetails.address,
-      email: this.customerDetails.email,
-      phoneNumber: this.customerDetails.phoneNumber,
-      paymentMethod: this.selectedPaymentMethod,
-      cartId: this.cartItems[0].id,
-      products: products,
+        userId: userId,
+        fullName: this.customerDetails.fullName,
+        address: this.customerDetails.address,
+        email: this.customerDetails.email,
+        phoneNumber: this.customerDetails.phoneNumber,
+        paymentMethod: this.selectedPaymentMethod,
+        cartId: this.cartItems[0].id, // Use the generated order ID
+        products: products,
     };
-  
+
     // Call the orderService.placeOrder method with the order object
     this.orderService.placeOrder(order).subscribe(
-      (response) => {
-        // Handle success
-        this.alertService.success('Order placed successfully.');
-      },
-      (error) => {
-        //show an error message to the user
-        this.alertService.error('Failed to place order. Please try again later.');
-      }
+        (response) => {
+            // Handle success
+            this.alertService.success('Order placed successfully.');
+            const orderId = response.orderId;
+
+            // Remove products from the cart after successfully placing the order
+            this.cartItems.forEach(item => {
+                this.shoppingCartService.removeFromCart(item).subscribe(
+                    () => {
+                        // Handle successful removal
+                    },
+                    (error) => {
+                        // Handle error
+                        console.error('Error removing product from cart:', error);
+                    }
+                );
+            });
+
+            // Clear the cart items array after successful removal
+            this.cartItems = [];
+            this.subTotal = 0;
+
+            // Navigate to order confirmation page with order ID
+            this.router.navigate(['/order-confirmation', orderId], { queryParams: { message: 'Order placed successfully' } });
+        },
+        (error) => {
+            // Handle error
+            this.alertService.error('Failed to place order. Please try again later.');
+        }
     );
   }
-  
+
 }

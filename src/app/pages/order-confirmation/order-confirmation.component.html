@@ -1,0 +1,60 @@
+<div class="order-confirmation">
+  <div class="header">
+    <img class="logo" src="../../../assets/images/logo.png" alt="Logo">
+    <div class="contact-info">
+      <p>N&H Grocer</p>
+      <p>Gairidhara, Kathmandu</p>
+      <p>+977 981-0172491</p>
+      <p>ninahagergrocer@gmail.com</p>
+    </div>
+  </div>
+
+  <div class="main-details">
+    <div class="customer-details">
+      <h3>CUSTOMER DETAILS</h3>
+      <div class="customer-info">
+        <p><strong>Full Name:</strong> {{ orderDetails.fullName }}</p>
+        <p><strong>Email:</strong> {{ orderDetails.email }}</p>
+        <p><strong>Phone Number:</strong> {{ orderDetails.phoneNumber }}</p>
+        <p><strong>Address:</strong> {{ orderDetails.address }}</p>
+      </div>
+    </div>
+  
+    <div class="order-info">
+      <p style="font-size: 35px; color: #27408B;"><strong>Order ID:</strong> #{{ orderDetails.orderId }}</p>
+      <p><strong>Date of Order:</strong> {{ orderDetails.created_at }}</p>
+      <p><strong>Payment Method:</strong> {{ orderDetails.paymentMethod }}</p>
+    </div>
+  </div>
+  
+    <div class="order-items">
+      <h2>Order Items</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>S.N</th>
+            <th>Product Name</th>
+            <th>Quantity</th>
+            <th>Unit Price (Rs.)</th>
+            <th>Total Price (Rs.)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of orderDetails.products; let i = index">
+            <td>{{ i + 1 }}</td>
+            <td>{{ item.product_name }}</td>
+            <td>{{ item.quantity }}</td>
+            <td>{{ item.unit_price }}</td>
+            <td>{{ item.total_price }}</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="subtotal">
+        <p><strong>Total Amount(Rs.):</strong> {{ calculateSubtotal() }}</p>
+      </div>
+    </div>
+    <div class="notice">
+      <p><img src="../../../assets/images/notice.png" alt="Notice icon"> NOTICE:</p>
+      <p>Thank You! Your order has been received and is being processed.</p>
+    </div>
+</div>

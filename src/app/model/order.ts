@@ -1,6 +1,7 @@
 import { OrderProduct } from "./orderProduct";
 
 export interface Order {
+    orderId?: number;
     userId: number;
     fullName: string;
     address: string;
@@ -9,4 +10,5 @@ export interface Order {
     cartId: number;
     paymentMethod: string;
     products: OrderProduct[];
+    createdAt?: Date;
 }

@@ -1,0 +1,104 @@
+.order-confirmation {
+    padding: 20px;
+    max-width: 1350px;
+    margin: 0 auto;
+    background-color:#fcfcfc;
+}
+
+.header {
+    display: flex;
+    border-bottom: 3px solid rgb(255, 187, 0);
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.logo {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+}
+
+.contact-info {
+    margin-top: 30px;
+    text-align: right;
+}
+
+.contact-info p:first-child {
+    font-weight: bold;
+    font-size: 18px;
+    text-decoration: underline;
+    font-size: 40px;
+    color: #27408B;
+}
+
+.main-details {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.customer-details {
+    flex-grow: 1;
+}
+
+.customer-info {
+    width: 100%;
+}
+
+.order-info {
+    width: 45%;
+    text-align: right;
+    margin-left: auto;
+}
+
+.order-details,
+.order-items {
+    margin-bottom: 20px;
+}
+
+table thead tr th {
+    background-color: #c4d2ec;
+}
+
+.subtotal {
+    text-align: right;
+    font-size: 20px;
+    margin-top: 0;
+    border-top: 2px solid rgb(255, 187, 0);
+    border-bottom: 2px solid rgb(255, 187, 0);
+    padding: 8px 10px;
+}
+
+.order-items table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.order-items th, .order-items td {
+    padding: 8px;
+    border-bottom: 1px solid #ddd;
+    text-align: left;
+}
+
+.order-items th {
+    background-color: #f2f2f2;
+}
+
+.notice {
+    margin-top: 20px;
+    text-align: left;
+    font-size: 18px;
+    color: #333;
+}
+
+.notice p {
+    margin: 5px 0;
+}
+
+.notice img {
+    height: 30px;
+    vertical-align: left;
+    margin-right: 5px;
+}
+

@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, map, of } from 'rxjs';
+import { BehaviorSubject, Observable, catchError, map, of, switchMap, throwError } from 'rxjs';
 import { ProductService } from './product.service';
 import { Product } from '../model/product'; // Import Product model
 import { HttpClient } from '@angular/common/http';
 import { AuthService } from './auth.service';
+import { AlertService } from '../components/alert/alert.service';
 
 @Injectable({
     providedIn: 'root'
@@ -12,7 +13,7 @@ export class ShoppingCartService {
     private cartItemsSubject = new BehaviorSubject<any[]>([]);
     cartItems$ = this.cartItemsSubject.asObservable();
 
-    constructor(private productService: ProductService, private http: HttpClient, private authService: AuthService) {
+    constructor(private productService: ProductService, private http: HttpClient, private authService: AuthService, private alertService: AlertService) {
         // Initialize cart items from localStorage when the service is instantiated
         this.initCartItems();
     }
@@ -33,28 +34,34 @@ export class ShoppingCartService {
             const updatedCartItems = [...this.cartItemsSubject.value];
             updatedCartItems[existingItemIndex].quantity++;
             this.cartItemsSubject.next(updatedCartItems);
-            this.updateLocalStorage(this.cartItemsSubject.value);
-        } else {
-            const updatedCartItems = [...this.cartItemsSubject.value, { ...product, imageUrl: `http://localhost:3000/product-images/${product.id}`, quantity: 1 }];
-            this.cartItemsSubject.next(updatedCartItems);
             this.updateLocalStorage(updatedCartItems);
+        } else {
+            // Check if the available quantity is sufficient
+            if (product.quantity > 0) {
+                const updatedCartItems = [...this.cartItemsSubject.value, { ...product, imageUrl: `http://localhost:3000/product-images/${product.id}`, quantity: 1 }];
+                this.cartItemsSubject.next(updatedCartItems);
+                this.updateLocalStorage(updatedCartItems);
+            } else {
+                this.alertService.warning('Sorry, the available quantity for this product is insufficient.');
+            }
         }
         // Update local storage
         this.updateLocalStorage(this.cartItemsSubject.value);
     }
+    
 
-    removeFromCart(item: any): void {
-        const updatedCartItems = this.cartItemsSubject.value.filter(cartItem => cartItem.id !== item.id);
-        this.cartItemsSubject.next(updatedCartItems);
-        this.updateLocalStorage(updatedCartItems);
-        // Remove from backend
-        this.deleteCartItem(item.id).subscribe(
-            () => {
-                console.log('Cart item removed successfully');
-            },
-            (error: any) => {
+    removeFromCart(item: any): Observable<any> {
+        return this.deleteCartItem(item.id).pipe(
+            switchMap(() => {
+                const updatedCartItems = this.cartItemsSubject.value.filter(cartItem => cartItem.id !== item.id);
+                this.cartItemsSubject.next(updatedCartItems);
+                this.updateLocalStorage(updatedCartItems);
+                return of(null); // Emit null to indicate successful removal
+            }),
+            catchError((error: any) => {
                 console.error('Error removing cart item:', error);
-            }
+                return throwError('Failed to remove product from cart. Please try again.');
+            })
         );
     }
     
@@ -95,17 +102,17 @@ export class ShoppingCartService {
         return this.http.get<any[]>(`http://localhost:3000/cart/${userId}`);
     }
 
-    updateCartItemQuantity(itemId: number, newQuantity: number): void {
-        const cartItems = this.cartItemsSubject.value;
-        const updatedCartItems = cartItems.map(item => {
-            if (item.id === itemId) {
-            return { ...item, quantity: newQuantity };
-        }
-            return item;
-        });
-        this.cartItemsSubject.next(updatedCartItems);
-        this.updateLocalStorage(updatedCartItems);
-    }
+    // updateCartItemQuantity(itemId: number, newQuantity: number): void {
+    //     const cartItems = this.cartItemsSubject.value;
+    //     const updatedCartItems = cartItems.map(item => {
+    //         if (item.id === itemId) {
+    //         return { ...item, quantity: newQuantity };
+    //     }
+    //         return item;
+    //     });
+    //     this.cartItemsSubject.next(updatedCartItems);
+    //     this.updateLocalStorage(updatedCartItems);
+    // }
 
     private updateLocalStorage(cartItems: any[]): void {
         localStorage.setItem('cartItems', JSON.stringify(cartItems));
@@ -114,5 +121,13 @@ export class ShoppingCartService {
     //for saving the products into cart table
     saveCartItem(cartItem: any) {
         return this.http.post('http://localhost:3000/cart', cartItem);
+    }
+
+    updateCartItemQuantity(itemId: number, newQuantity: number): Observable<any> {
+        return this.http.put(`http://localhost:3000/cart/${itemId}`, { quantity: newQuantity });
+    }
+
+    removeItemsByCartId(cartId: number): Observable<any> {
+        return this.http.delete(`http://localhost:3000/cart/${cartId}`);
     }
 }
